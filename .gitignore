@@ -1,3 +1,4 @@
+picamera.py
 *.pyc
 # Logs
 logs

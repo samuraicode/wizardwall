@@ -12,6 +12,12 @@ class camManager(object):
 	isRunning = False
 	quadrants = [(0,0,0.5,0.5), (0.5,0,0.5,0.5), (0.5,0.5,0.5,0.5), (0,0.5,0.5,0.5)]
 	triplets = [(0,0,1,0.33), (0,0.33,0,0.33), (0,0.66,0,0.33)]
+	sixteenths = [
+		(0,0,0.25,0.25), (0,0.25,0.25,0.25), (0,0.5,0.25,0.25), (0,0.75,0.25,0.25),
+		(0.25,0,0.25,0.25), (0.25,0.25,0.25,0.25), (0.25,0.5,0.25,0.25), (0.25,0.75,0.25,0.25),
+		(0.5,0,0.25,0.25), (0.5,0.25,0.25,0.25), (0.5,0.5,0.25,0.25), (0.5,0.75,0.25,0.25),
+		(0.75,0,0.25,0.25), (0.75,0.25,0.25,0.25), (0.75,0.5,0.25,0.25), (0.75,0.75,0.25,0.25)
+	]
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -53,6 +59,10 @@ class camManager(object):
 			self.log("Triplet %" % i)
 			self.camera.zoom = self.triplets[i]
 			time.sleep(2.0)
+		for i in range(len(sixteenths)):
+			self.log("Sixteenth %" % i)
+			self.camera.zoom = self.sixteenths[i]
+			time.sleep(2.0)
 		self.log("")
 		self.camera.zoom = (0,0,1,1)
 
@@ -70,13 +80,23 @@ class camManager(object):
 		self.log("")
 		self.camera.color_effects = None
 
+	def effectize(self):
+		print "Setting effect"
+		currentEffect = self.camera.image_effect
+		nextIndex = self.camera.IMAGE_EFFECTS.index(currentEffect) + 1
+		if nextIndex >= len(self.camera.IMAGE_EFFECTS):
+			nextIndex = 0
+		nextEffect = self.camera.IMAGE_EFFECTS[nextIndex]
+		self.log(nextEffect)
+		self.camera.image_effect = nextEffect
+
 	def exposure(self):
 		print "Setting exposure"
 		currentExposure = self.camera.exposure_mode
-		nextIndex = picamera.PiCamera.EXPOSURE_MODES.index(currentExposure) + 1
-		if nextIndex >= len(picamera.PiCamera.EXPOSURE_MODES):
+		nextIndex = self.camera.EXPOSURE_MODES.index(currentExposure) + 1
+		if nextIndex >= len(self.camera.EXPOSURE_MODES):
 			nextIndex = 0
-		nextExposure = picamera.PiCamera.EXPOSURE_MODES[nextIndex]
+		nextExposure = self.camera.EXPOSURE_MODES[nextIndex]
 		self.log(nextExposure)
 		self.camera.exposure_mode = nextExposure
 
@@ -92,6 +112,8 @@ class camManager(object):
 				self.colorize()
 			elif cmd == "exposure":
 				self.exposure()
+			elif cmd == "effect":
+				self.effectize()
 			elif cmd == "hflip":
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":

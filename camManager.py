@@ -7,6 +7,7 @@
 
 import time
 import picamera
+from PIL import Image
 
 class camManager(object):
 	isRunning = False
@@ -27,15 +28,42 @@ class camManager(object):
 	def log(self, message):
 		self.camera.annotate_text = message
 
-	def _ycc(r, g, b): # in (0,255) range cb = u, cr = v
+	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b
 		cb = 128 -.168736*r -.331364*g + .5*b
 		cr = 128 +.5*r - .418688*g - .081312*b
 		return y, cb, cr
 
-	def setColor(r, g, b): # (r,g,b)
+	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
+
+	def setOverlay(self, imagefile):
+		# Clear existing overlays
+		existingOverlays = self.camera.overlays
+		for overlay in existingOverlays:
+			self.camera.remove_overlay(overlay)
+
+		# Load the arbitrarily sized image
+		img = Image.open(imagefile)
+		# Create an image padded to the required size with
+		# mode 'RGB'
+		pad = Image.new('RGB', (
+			(img.size[0] + 31 // 32) * 32,
+			(img.size[1] + 15 // 16) * 16,
+		))
+		# Paste the original image into the padded one
+		pad.paste(img, (0, 0))
+
+		# Add the overlay with the padded image as the source,
+		# but the original image's dimensions
+		o = self.camera.add_overlay(pad.tostring(), size=img.size)
+		# By default, the overlay is in layer 0, beneath the
+		# preview (which defaults to layer 2). Here we make
+		# the new overlay semi-transparent, then move it above
+		# the preview
+		o.alpha = 128
+		o.layer = 3
 
 	# Preview manipulation
 	def start(self):
@@ -118,5 +146,11 @@ class camManager(object):
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":
 				self.camera.vflip = not self.camera.vflip
+			elif cmd == "v1":
+				self.setOverlay('v1.jpg')
+			elif cmd == "v2":
+				self.setOverlay('v2.jpg')
+			elif cmd == "v3":
+				self.setOverlay('v3.jpg')
 			else:
 				print "Unknown command: %s" % cmd

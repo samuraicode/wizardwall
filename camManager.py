@@ -145,10 +145,10 @@ class camManager(object):
 			elif cmd == "vflip":
 				self.camera.vflip = not self.camera.vflip
 			elif cmd == "v1":
-				self.setOverlay('v1.jpg')
+				self.setOverlay('images/v1.png')
 			elif cmd == "v2":
-				self.setOverlay('v2.jpg')
+				self.setOverlay('images/v2.png')
 			elif cmd == "v3":
-				self.setOverlay('v3.jpg')
+				self.setOverlay('images/v3.png')
 			else:
 				print "Unknown command: %s" % cmd

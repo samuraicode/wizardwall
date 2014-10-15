@@ -38,6 +38,7 @@ class camManager(object):
 
 	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
+		print convertedColor
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
 
 	def setOverlay(self, imagefile):
@@ -82,15 +83,15 @@ class camManager(object):
 	def scan(self):
 		print "Scanning"
 		for i in range(len(self.quadrants)):
-			self.log("Quadrant %" % i)
+			self.log("Quadrant " + i)
 			self.camera.zoom = self.quadrants[i]
 			time.sleep(2.0)
 		for i in range(len(self.triplets)):
-			self.log("Triplet %" % i)
+			self.log("Triplet " + i)
 			self.camera.zoom = self.triplets[i]
 			time.sleep(2.0)
 		for i in range(len(self.sixteenths)):
-			self.log("Sixteenth %" % i)
+			self.log("Sixteenth " + i)
 			self.camera.zoom = self.sixteenths[i]
 			time.sleep(2.0)
 		self.log("")

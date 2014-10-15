@@ -12,7 +12,6 @@ from PIL import Image
 class camManager(object):
 	isRunning = False
 	quadrants = [(0,0,0.5,0.5), (0.5,0,0.5,0.5), (0.5,0.5,0.5,0.5), (0,0.5,0.5,0.5)]
-	triplets = [(0,0,1,0.33), (0,0.33,0,0.33), (0,0.66,0,0.33)]
 	sixteenths = [
 		(0,0,0.25,0.25), (0,0.25,0.25,0.25), (0,0.5,0.25,0.25), (0,0.75,0.25,0.25),
 		(0.25,0,0.25,0.25), (0.25,0.25,0.25,0.25), (0.25,0.5,0.25,0.25), (0.25,0.75,0.25,0.25),
@@ -34,7 +33,7 @@ class camManager(object):
 		y = .299*r + .587*g + .114*b
 		cb = 128 -.168736*r -.331364*g + .5*b
 		cr = 128 +.5*r - .418688*g - .081312*b
-		return y, int(max(255,cb)), int(max(255, cr))
+		return int(min(255,y)), int(min(255,cb)), int(min(255, cr))
 
 	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
@@ -85,10 +84,6 @@ class camManager(object):
 		for i in range(len(self.quadrants)):
 			self.log("Quadrant " + str(i))
 			self.camera.zoom = self.quadrants[i]
-			time.sleep(2.0)
-		for i in range(len(self.triplets)):
-			self.log("Triplet " + str(i))
-			self.camera.zoom = self.triplets[i]
 			time.sleep(2.0)
 		for i in range(len(self.sixteenths)):
 			self.log("Sixteenth " + str(i))

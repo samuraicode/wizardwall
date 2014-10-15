@@ -23,6 +23,7 @@ class camManager(object):
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
+		self.camera.resolution = (640,480)
 		self.start()
 
 	# Utility functions

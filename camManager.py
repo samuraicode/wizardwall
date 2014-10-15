@@ -19,6 +19,8 @@ class camManager(object):
 		(0.5,0,0.25,0.25), (0.5,0.25,0.25,0.25), (0.5,0.5,0.25,0.25), (0.5,0.75,0.25,0.25),
 		(0.75,0,0.25,0.25), (0.75,0.25,0.25,0.25), (0.75,0.5,0.25,0.25), (0.75,0.75,0.25,0.25)
 	]
+	exposures = picamera.PiCamera.EXPOSURE_MODES.keys()
+	effects = picamera.PiCamera.IMAGE_EFFECTS.keys()
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -79,15 +81,15 @@ class camManager(object):
 	# Commands
 	def scan(self):
 		print "Scanning"
-		for i in range(len(quadrants)):
+		for i in range(len(self.quadrants)):
 			self.log("Quadrant %" % i)
 			self.camera.zoom = self.quadrants[i]
 			time.sleep(2.0)
-		for i in range(len(triplets)):
+		for i in range(len(self.triplets)):
 			self.log("Triplet %" % i)
 			self.camera.zoom = self.triplets[i]
 			time.sleep(2.0)
-		for i in range(len(sixteenths)):
+		for i in range(len(self.sixteenths)):
 			self.log("Sixteenth %" % i)
 			self.camera.zoom = self.sixteenths[i]
 			time.sleep(2.0)
@@ -111,20 +113,20 @@ class camManager(object):
 	def effectize(self):
 		print "Setting effect"
 		currentEffect = self.camera.image_effect
-		nextIndex = self.camera.IMAGE_EFFECTS.index(currentEffect) + 1
-		if nextIndex >= len(self.camera.IMAGE_EFFECTS):
+		nextIndex = self.effects.index(currentEffect) + 1
+		if nextIndex >= len(self.effects):
 			nextIndex = 0
-		nextEffect = self.camera.IMAGE_EFFECTS[nextIndex]
+		nextEffect = self.effects[nextIndex]
 		self.log(nextEffect)
 		self.camera.image_effect = nextEffect
 
 	def exposure(self):
 		print "Setting exposure"
 		currentExposure = self.camera.exposure_mode
-		nextIndex = self.camera.EXPOSURE_MODES.index(currentExposure) + 1
-		if nextIndex >= len(self.camera.EXPOSURE_MODES):
+		nextIndex = self.exposures.index(currentExposure) + 1
+		if nextIndex >= len(self.exposures):
 			nextIndex = 0
-		nextExposure = self.camera.EXPOSURE_MODES[nextIndex]
+		nextExposure = self.exposures[nextIndex]
 		self.log(nextExposure)
 		self.camera.exposure_mode = nextExposure
 

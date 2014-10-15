@@ -20,7 +20,9 @@ class camManager(object):
 		(0.75,0,0.25,0.25), (0.75,0.25,0.25,0.25), (0.75,0.5,0.25,0.25), (0.75,0.75,0.25,0.25)
 	]
 	exposures = picamera.PiCamera.EXPOSURE_MODES.keys()
-	effects = picamera.PiCamera.IMAGE_EFFECTS.keys()
+	#picamera.PiCamera.IMAGE_EFFECTS.keys()
+	effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon']
+	awbmodes = picamera.PiCamera.AWB_MODES.keys()
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -128,6 +130,16 @@ class camManager(object):
 		self.log(nextExposure)
 		self.camera.exposure_mode = nextExposure
 
+	def awbmode(self):
+		print "Setting awb mode"
+		currentMode = self.camera.awb_mode
+		nextIndex = self.awbmodes.index(currentMode) + 1
+		if nextIndex >= len(self.awbmodes):
+			nextIndex = 0
+		nextMode = self.awbmodes[nextIndex]
+		self.log(nextMode)
+		self.camera.awb_mode = nextMode
+
 	# Handler
 	def handleCommand(self, command):
 		print "Handling command"
@@ -146,6 +158,8 @@ class camManager(object):
 				self.exposure()
 			elif cmd == "effect":
 				self.effectize()
+			elif cmd == "awbmode":
+				self.awbmode();
 			elif cmd == "hflip":
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":

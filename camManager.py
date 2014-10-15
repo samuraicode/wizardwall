@@ -34,7 +34,7 @@ class camManager(object):
 		y = .299*r + .587*g + .114*b
 		cb = 128 -.168736*r -.331364*g + .5*b
 		cr = 128 +.5*r - .418688*g - .081312*b
-		return y, cb, cr
+		return y, int(max(255,cb)), int(max(255, cr))
 
 	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
@@ -95,7 +95,7 @@ class camManager(object):
 			self.camera.zoom = self.sixteenths[i]
 			time.sleep(2.0)
 		self.log("")
-		self.camera.zoom = (0,0,1,1)
+		self.camera.zoom = (0,0,1.0,1.0)
 
 	def colorize(self):
 		print "Coloring"

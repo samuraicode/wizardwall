@@ -7,6 +7,7 @@
 		<title>WizardWall</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
 	</head>
 	<body>
 	<div class="container">
@@ -48,16 +49,29 @@
 					<button type="button" onclick="getIt('v3')" class="btn btn-default">Image 3</button>
 				</div>
 			</div>
+			<hr/>
+			<div class="input-group col-sm-4 picker">
+				<input type="text" value="#ff0000" class="form-control" />
+				<span class="input-group-addon"><i></i></span>
+			</div>
 		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="assets/js/bootstrap-colorpicker.min.js"></script>
 	<script>
-		function getIt(cmd, value) {
-			if (!value) value = "foo";
-			$.get( "api?" + cmd + "=" + value, function( data ) {});
-		}
+		$(function(){
+			function getIt(cmd, value) {
+				if (!value) value = "foo";
+				$.get( "api?" + cmd + "=" + value, function( data ) {});
+			}
+
+	        $('.picker').colorpicker().on('hidePicker', function(ev){
+	        	var newColor = ev.color.toRGB();
+	        	getIt('colorize', JSON.stringify(newColor));
+			});;
+	    });
 	</script>
 	</body>
 </html>

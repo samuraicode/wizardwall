@@ -6,6 +6,7 @@
 #  Created by Jeremy Noonan on 10/12/2014
 
 import time
+import ast
 import picamera
 from PIL import Image
 
@@ -135,6 +136,10 @@ class camManager(object):
 			self.log(cmd)
 			if cmd == "scan":
 				self.scan()
+			elif cmd == "colorize":
+				newDict = ast.literal_eval(options[0])
+				self.log(newDict)
+				self.setColor(newDict['r'], newDict['g'], newDict['b'])
 			elif cmd == "color":
 				self.colorize()
 			elif cmd == "exposure":

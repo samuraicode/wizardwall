@@ -83,15 +83,15 @@ class camManager(object):
 	def scan(self):
 		print "Scanning"
 		for i in range(len(self.quadrants)):
-			self.log("Quadrant " + i)
+			self.log("Quadrant " + str(i))
 			self.camera.zoom = self.quadrants[i]
 			time.sleep(2.0)
 		for i in range(len(self.triplets)):
-			self.log("Triplet " + i)
+			self.log("Triplet " + str(i))
 			self.camera.zoom = self.triplets[i]
 			time.sleep(2.0)
 		for i in range(len(self.sixteenths)):
-			self.log("Sixteenth " + i)
+			self.log("Sixteenth " + str(i))
 			self.camera.zoom = self.sixteenths[i]
 			time.sleep(2.0)
 		self.log("")

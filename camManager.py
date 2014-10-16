@@ -26,12 +26,12 @@ class camManager(object):
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
-		self.camera.resolution = (640,480)
+		self.camera.resolution = (720,480)
 		self.start()
 
 	# Utility functions
 	def log(self, message):
-		self.camera.annotate_text = message
+		self.camera.annotate_text = str(message)
 
 	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b
@@ -68,7 +68,7 @@ class camManager(object):
 		# preview (which defaults to layer 2). Here we make
 		# the new overlay semi-transparent, then move it above
 		# the preview
-		o.alpha = 128
+		# o.alpha = 128
 		o.layer = 3
 
 	# Preview manipulation
@@ -149,7 +149,7 @@ class camManager(object):
 			if cmd == "scan":
 				self.scan()
 			elif cmd == "colorize":
-				newDict = ast.literal_eval(options[0])
+				newDict = ast.literal_eval(command[cmd][0])
 				self.log(newDict)
 				self.setColor(newDict['r'], newDict['g'], newDict['b'])
 			elif cmd == "color":

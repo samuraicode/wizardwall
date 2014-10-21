@@ -5,6 +5,7 @@
 #
 #  Created by Jeremy Noonan on 10/12/2014
 
+import socket
 import time
 import ast
 import picamera
@@ -27,6 +28,7 @@ class camManager(object):
 	def __init__(self):
 		self.camera = picamera.PiCamera()
 		self.camera.resolution = (720,480)
+		self.camera.framerate = 24
 		self.start()
 
 	# Utility functions
@@ -130,6 +132,22 @@ class camManager(object):
 		self.log(nextMode)
 		self.camera.awb_mode = nextMode
 
+	def streamit(self):
+		serverPort = 8000
+		print "Starting socket on port %" % serverPort
+		server_socket = socket.socket()
+		server_socket.bind(('0.0.0.0', 8000))
+		server_socket.listen(0)
+		# Accept a single connection and make a file-like object out of it
+		connection = server_socket.accept()[0].makefile('wb')
+		try:
+			self.camera.start_recording(connection, format='h264')
+			self.camera.wait_recording(60)
+			self.camera.stop_recording()
+		finally:
+			connection.close()
+			server_socket.close()
+
 	# Handler
 	def handleCommand(self, command):
 		print "Handling command"
@@ -138,6 +156,8 @@ class camManager(object):
 			self.log(cmd)
 			if cmd == "scan":
 				self.scan()
+			elif cmd == "stream":
+				self.streamit()
 			elif cmd == "zoom":
 				zoomDict = ast.literal_eval(command[cmd][0])
 				self.log(zoomDict)

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>WizardWall</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
-	</head>
-	<body>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WizardWall</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
+</head>
+<body>
 	<div class="container">
 		<div class="col-sm-12">
 			<h1 class="text-center">The Wizard will see you now</h1>
+			<a href="zoom.html">Zoom</a>
 			<hr/>
 			<div class="btn-group btn-group-lg btn-group-justified">
 				<div class="btn-group">
@@ -68,15 +69,16 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="assets/js/bootstrap-colorpicker.min.js"></script>
 	<script>
-		function getIt(cmd, value) {
-			if (!value) value = "foo";
-			$.get( "api?" + cmd + "=" + value, function( data ) {});
-		}
+	function getIt(cmd, value) {
+		if (!value) value = "foo";
+		$.get( "api?" + cmd + "=" + value, function( data ) {});
+		return false;
+	}
 
-        $('.picker').colorpicker().on('hidePicker', function(ev){
-        	var newColor = ev.color.toRGB();
-        	getIt('colorize', JSON.stringify(newColor));
-		});
+	$('.picker').colorpicker().on('hidePicker', function(ev){
+		var newColor = ev.color.toRGB();
+		getIt('colorize', JSON.stringify(newColor));
+	});
 	</script>
-	</body>
+</body>
 </html>

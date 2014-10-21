@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WizardWall</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="col-sm-12">
+			<h1 class="text-center">Zoom zoom</h1>
+			<a href="index.html">Picture Effect</a>
+			<hr/>
+			<h2 id="currentParams"></h2>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="left(.25)" class="btn btn-default">Big Left</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="left()" class="btn btn-default">Left</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="right()" class="btn btn-default">Right</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="right(.25)" class="btn btn-default">Big Right</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="up(.25)" class="btn btn-default">Big Up</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="up()" class="btn btn-default">Up</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="down()" class="btn btn-default">Down</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="down(.25)" class="btn btn-default">Big Down</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="thinner(.25)" class="btn btn-default">Thinner</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="thinner()" class="btn btn-default">Thin</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="wider()" class="btn btn-default">Wide</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="wider(.25)" class="btn btn-default">Wider</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="shorter(.25)" class="btn btn-default">Shorter</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="shorter()" class="btn btn-default">Short</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="taller()" class="btn btn-default">Tall</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="taller(.25)" class="btn btn-default">Taller</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="reset()" class="btn btn-default">Reset</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+	<script>
+	var x = 0;
+	var y = 0;
+	var w = 1.0;
+	var h = 1.0;
+
+	function updateParams(dontsend) {
+		$('#currentParams').text(x + ', ' + y + ', ' + w + ', ' + h);
+		var newZoom = { 'x':x, 'y':y, 'w':w, 'h':h };
+		if (dontsend) return;
+		getIt('zoom', JSON.stringify(newZoom));
+	}
+
+	function strip(number) {
+		return (parseFloat(number.toPrecision(12)));
+	}
+
+	function getIt(cmd, value) {
+		if (!value) value = "foo";
+		$.get( "api?" + cmd + "=" + value, function( data ) {});
+		return false;
+	}
+
+	function left(amt) {
+		var size = amt ? amt : 0.1;
+		x -= size;
+		if (x < 0) x = 0;
+		else x = strip(x);
+		updateParams();
+		return false;
+	}
+
+	function right(amt) {
+		var size = amt ? amt : 0.1;
+		x += size;
+		if (x > 1) x = 1;
+		else x = strip(x);
+		updateParams();
+		return false;
+	}
+
+	function up(amt) {
+		var size = amt ? amt : 0.1;
+		y -= size;
+		if (y < 0) y = 0;
+		else y = strip(y);
+		updateParams();
+		return false;
+	}
+
+	function down(amt) {
+		var size = amt ? amt : 0.1;
+		y += size;
+		if (y > 1) y = 1;
+		else y = strip(y);
+		updateParams();
+		return false;
+	}
+
+	function wider(amt) {
+		var size = amt ? amt : 0.1;
+		w += size;
+		if (w > 1) w = 1;
+		else w = strip(w);
+		updateParams();
+		return false;
+	}
+
+	function thinner(amt) {
+		var size = amt ? amt : 0.1;
+		w -= size;
+		if (w < 0.1) w = 0.1;
+		else w = strip(w);
+		updateParams();
+		return false;
+	}
+
+	function taller(amt) {
+		var size = amt ? amt : 0.1;
+		h += size;
+		if (h > 1) h = 1;
+		else h = strip(h);
+		updateParams();
+		return false;
+	}
+
+	function shorter(amt) {
+		var size = amt ? amt : 0.1;
+		h -= size;
+		if (h < 0.1) h = 0.1;
+		else h = strip(h);
+		updateParams();
+		return false;
+	}
+
+	function reset() {
+		x = 0;
+		y = 0;
+		w = 1;
+		h = 1;
+		updateParams();
+		return false;
+	}
+
+	updateParams(true);
+	</script>
+</body>
+</html>

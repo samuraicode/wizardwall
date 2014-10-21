@@ -138,6 +138,10 @@ class camManager(object):
 			self.log(cmd)
 			if cmd == "scan":
 				self.scan()
+			elif cmd == "zoom":
+				zoomDict = ast.literal_eval(command[cmd][0])
+				self.log(zoomDict)
+				self.camera.zoom = (zoomDict['x'], zoomDict['y'], zoomDict['w'], zoomDict['h'])
 			elif cmd == "colorize":
 				newDict = ast.literal_eval(command[cmd][0])
 				self.log(newDict)

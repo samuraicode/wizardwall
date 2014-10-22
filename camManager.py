@@ -134,7 +134,7 @@ class camManager(object):
 
 	def streamit(self):
 		serverPort = 8000
-		print "Starting socket on port 8000"
+		print "Starting socket on port %s" % serverPort
 		server_socket = socket.socket()
 		server_socket.bind(('0.0.0.0', 8000))
 		server_socket.listen(0)

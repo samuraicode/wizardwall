@@ -1,5 +1,5 @@
 import picamera
-import sockert
+import socket
 
 with picamera.PiCamera() as camera:
     camera.resolution = (640, 480)
@@ -8,6 +8,8 @@ with picamera.PiCamera() as camera:
 
     serverPort = 8000
     print "Starting socket on port %s" % serverPort
+    print "Run vlc to connect:"
+    print "vlc tcp/h264://<this address>:%s/" % serverPort
     server_socket = socket.socket()
     server_socket.bind(('0.0.0.0', 8000))
     server_socket.listen(0)

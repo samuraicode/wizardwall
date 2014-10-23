@@ -24,6 +24,8 @@ class camManager(object):
 	#picamera.PiCamera.IMAGE_EFFECTS.keys()
 	effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon']
 	awbmodes = picamera.PiCamera.AWB_MODES.keys()
+	server_socket = None
+	connection = None
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -134,19 +136,25 @@ class camManager(object):
 
 	def streamit(self):
 		serverPort = 8000
-		print "Starting socket on port %s" % serverPort
-		server_socket = socket.socket()
-		server_socket.bind(('0.0.0.0', 8000))
-		server_socket.listen(0)
+		print "Starting stream on port %s" % serverPort
+		self.server_socket = socket.socket()
+		self.server_socket.bind(('0.0.0.0', 8000))
+		self.server_socket.listen(0)
 		# Accept a single connection and make a file-like object out of it
-		connection = server_socket.accept()[0].makefile('wb')
+		self.connection = self.server_socket.accept()[0].makefile('wb')
 		try:
-			self.camera.start_recording(connection, format='h264')
-			self.camera.wait_recording(60)
-			self.camera.stop_recording()
-		finally:
-			connection.close()
-			server_socket.close()
+			self.camera.start_recording(self.connection, format='h264')
+			self.camera.wait_recording(0)
+		except:
+			print "Exception"
+			self.connection.close()
+			self.server_socket.close()
+
+	def stopstream(self):
+		print "Stopping stream"
+		self.camera.stop_recording()
+		self.connection.close()
+		self.server_socket.close()
 
 	# Handler
 	def handleCommand(self, command):
@@ -158,6 +166,8 @@ class camManager(object):
 				self.scan()
 			elif cmd == "stream":
 				self.streamit()
+			elif cmd == "stopstream":
+				self.stopstream();
 			elif cmd == "zoom":
 				zoomDict = ast.literal_eval(command[cmd][0])
 				self.log(zoomDict)

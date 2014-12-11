@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WizardWall MCP</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="col-sm-12">
+			<h1 class="text-center">Master Controller</h1>
+			<a href="zoomcontroller.html">Zoom</a>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('scan')" class="btn btn-default">Scan</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('color')" class="btn btn-default">Colorize</button>
+				</div>
+				
+				<div class="btn-group">
+					<button type="button" onclick="getIt('effect')" class="btn btn-default">Effect</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('exposure')" class="btn btn-default">Exposure</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('awbmode')" class="btn btn-default">AWB Mode</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('hflip')" class="btn btn-default">Flip Horizontal</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('vflip')" class="btn btn-default">Flip Vertical</button>
+				</div>
+			</div>
+			<hr/>
+			<code>vlc tcp/h264://my_pi_address:8000/</code>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('stream')" class="btn btn-default">Start Stream</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('stopstream')" class="btn btn-default">Stop Stream</button>
+				</div>
+			</div>
+			<hr/>
+			<div class="input-group col-sm-4 picker">
+				<span class="input-group-addon"><i></i></span>
+				<input type="text" value="#ff0000" class="form-control" />
+			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('v1')" class="btn btn-default">Image 1</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('v2')" class="btn btn-default">Image 2</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="getIt('v3')" class="btn btn-default">Image 3</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+	<script>
+	var tvs = ['tvone','tvtwo','tvthree','tvfour','tvfive'];
+
+	function getIt(cmd, value) {
+		if (!value) value = "foo";
+
+		for (var i=0; i<tvs.length; i++) {
+			$.get( "http://" + tvs[i] + ":8080/api?" + cmd + "=" + value, function( data ) {});
+		}
+		return false;
+	}
+
+	$('.picker').colorpicker().on('hidePicker', function(ev){
+		var newColor = ev.color.toRGB();
+		getIt('colorize', JSON.stringify(newColor));
+	});
+	</script>
+</body>
+</html>

@@ -60,6 +60,11 @@
 				<span class="input-group-addon"><i></i></span>
 				<input type="text" value="#ff0000" class="form-control" />
 			</div>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="rainbowize()" class="btn btn-default">Rainbow</button>
+				</div>
+			</div>
 			<hr/>
 			<div class="btn-group btn-group-lg btn-group-justified">
 				<div class="btn-group">
@@ -94,6 +99,38 @@
 		var newColor = ev.color.toRGB();
 		getIt('colorize', JSON.stringify(newColor));
 	});
+
+	function makeColorGradient(index, frequency1, frequency2, frequency3,
+		phase1, phase2, phase3,
+		center, width, len)
+	{
+		if (frequency1 == undefined)   frequency1 = .3;
+		if (frequency2 == undefined)   frequency2 = .3;
+		if (frequency3 == undefined)   frequency3 = .3;
+		if (phase1 == undefined)   phase1 = 0;
+		if (phase2 == undefined)   phase2 = 2;
+		if (phase3 == undefined)   phase3 = 4;
+		if (center == undefined)   center = 128;
+		if (width == undefined)    width = 127;
+		if (len == undefined)      len = 50;
+
+		// for (var i = 0; i < len; ++i)
+		// {
+			var red = Math.sin(frequency1*index + phase1) * width + center;
+			var grn = Math.sin(frequency2*index + phase2) * width + center;
+			var blu = Math.sin(frequency3*index + phase3) * width + center;
+			getIt('colorize', JSON.stringify({'a':1,'r':red,'g':grn,'b':blu}));
+		// }
+	}
+
+	var rainIndex = 0;
+
+	function rainbowize() {
+		setInterval(function() {
+			makeColorGradient(rainIndex++);
+			if (rainIndex > 50) rainIndex=0;
+		}, 100);
+	}
 	</script>
 </body>
 </html>

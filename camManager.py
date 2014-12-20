@@ -49,10 +49,7 @@ class camManager(object):
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
 
 	def setOverlay(self, imagefile):
-		# Clear existing overlays
-		existingOverlays = self.camera.overlays
-		for overlay in existingOverlays:
-			self.camera.remove_overlay(overlay)
+		self.clearOverlay()
 
 		# Load the arbitrarily sized image
 		img = Image.open(imagefile)
@@ -64,6 +61,12 @@ class camManager(object):
 		o = self.camera.add_overlay(pad.tostring(), size=img.size)
 		o.alpha = 128
 		o.layer = 3
+
+	def clearOverlay(self):
+		# Clear existing overlays
+		existingOverlays = self.camera.overlays
+		for overlay in existingOverlays:
+			self.camera.remove_overlay(overlay)
 
 	# Preview manipulation
 	def start(self):
@@ -188,6 +191,8 @@ class camManager(object):
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":
 				self.camera.vflip = not self.camera.vflip
+			elif cmd == "clear":
+				self.clearOverlay()
 			elif cmd == "v1":
 				self.setOverlay('images/v1.png')
 			elif cmd == "v2":

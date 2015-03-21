@@ -40,10 +40,12 @@ class camManager(object):
 			self.camera.annotate_text = str(message)
 
 	def silence(self):
+		self.log("");
 		self.quiet = True
 
 	def talk(self):
 		self.quiet = False
+		self.log("logging");
 
 	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b

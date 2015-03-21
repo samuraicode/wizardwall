@@ -89,6 +89,15 @@
 					<button type="button" onclick="getIt('talk')" class="btn btn-default">Start Logging</button>
 				</div>
 			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="startrandom()" class="btn btn-default">Start Randomize</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" onclick="stoprandom()" class="btn btn-default">Stop Randomize</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -98,11 +107,15 @@
 	<script>
 	var tvs = ['tvone','tvtwo','tvthree','tvfour','tvfive'];
 
+	function getTv(tv, cmd, value) {
+		$.get( "http://" + tv + ":8080/api?" + cmd + "=" + value, function( data ) {});
+	}
+
 	function getIt(cmd, value) {
 		if (!value) value = "foo";
 
 		for (var i=0; i<tvs.length; i++) {
-			$.get( "http://" + tvs[i] + ":8080/api?" + cmd + "=" + value, function( data ) {});
+			getTv(tvs[i], cmd, value);
 		}
 		return false;
 	}
@@ -146,6 +159,44 @@
 				getIt('clearcolor');
 			}
 		}, 100);
+		return false;
+	}
+
+	// RANDOMIZATION SECTION
+	var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
+
+	// Returns a random integer between min (included) and max (excluded)
+	// Using Math.round() will give you a non-uniform distribution!
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min)) + min;
+	}
+
+	var randomOn = false;
+
+	function stoprandom() {
+		randomOn = false;
+		return false;
+	}
+
+	function startrandom() {
+		randomOn = true;
+		nextrandom();
+		return false;
+	}
+
+	function nextrandom() {
+		setTimeout(function() {
+			// Pick a random tv
+			var tvIndex = getRandomInt(0,tvs.length);
+			var nextTv = tvs[tvIndex];
+
+			getTv(nextTv, 'seteffect', effects[getRandomInt(0,effects.length)]);;
+
+			if (randomOn) {
+				nextrandom();
+			}
+		}, getRandomInt(100, 5000));
+		return false;
 	}
 	</script>
 </body>

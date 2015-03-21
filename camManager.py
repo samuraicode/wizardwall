@@ -58,6 +58,11 @@ class camManager(object):
 		print convertedColor
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
 
+	def seteffect(self, effect):
+		print "Setting effect to %s" % effect
+		self.log(effect)
+		self.camera.image_effect = effect
+
 	def setOverlay(self, imagefile):
 		self.clearOverlay()
 
@@ -202,6 +207,8 @@ class camManager(object):
 				self.exposure()
 			elif cmd == "effect":
 				self.effectize()
+			elif cmd == "seteffect":
+				self.seteffect(command[cmd][0]);
 			elif cmd == "awbmode":
 				self.awbmode();
 			elif cmd == "hflip":

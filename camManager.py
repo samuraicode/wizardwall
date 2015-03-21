@@ -107,6 +107,11 @@ class camManager(object):
 		self.log("")
 		self.camera.color_effects = None
 
+	def clearColor(self):
+		print "Clearing color"
+		self.log("")
+		self.camera.color_effects = None
+
 	def effectize(self):
 		print "Setting effect"
 		currentEffect = self.camera.image_effect
@@ -181,6 +186,8 @@ class camManager(object):
 				self.setColor(newDict['r'], newDict['g'], newDict['b'])
 			elif cmd == "color":
 				self.colorize()
+			elif cmd == "clearcolor":
+				self.clearColor();
 			elif cmd == "exposure":
 				self.exposure()
 			elif cmd == "effect":

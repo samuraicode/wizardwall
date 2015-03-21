@@ -129,9 +129,13 @@
 	var rainIndex = 0;
 
 	function rainbowize() {
-		setInterval(function() {
+		var rainbowInterval = setInterval(function() {
 			makeColorGradient(rainIndex++);
-			if (rainIndex > 50) rainIndex=0;
+			if (rainIndex > 50) { 
+				rainIndex=0;
+				clearInterval(rainbowInterval);
+				getIt('clearColor');
+			}
 		}, 100);
 	}
 	</script>

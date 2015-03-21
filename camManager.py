@@ -36,7 +36,7 @@ class camManager(object):
 
 	# Utility functions
 	def log(self, message):
-		if !quiet
+		if quiet == False
 			self.camera.annotate_text = str(message)
 
 	def silence(self):

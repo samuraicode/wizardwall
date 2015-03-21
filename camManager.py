@@ -26,6 +26,7 @@ class camManager(object):
 	awbmodes = picamera.PiCamera.AWB_MODES.keys()
 	server_socket = None
 	connection = None
+	quiet = False
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -35,7 +36,14 @@ class camManager(object):
 
 	# Utility functions
 	def log(self, message):
-		self.camera.annotate_text = str(message)
+		if !quiet
+			self.camera.annotate_text = str(message)
+
+	def silence(self):
+		self.quiet = True
+
+	def talk(self):
+		self.quiet = False
 
 	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b
@@ -206,5 +214,9 @@ class camManager(object):
 				self.setOverlay('images/v2.png')
 			elif cmd == "v3":
 				self.setOverlay('images/v3.png')
+			elif cmd == "silence":
+				self.silence();
+			elif cmd == "talk":
+				self.talk();
 			else:
 				print "Unknown command: %s" % cmd

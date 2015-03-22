@@ -122,6 +122,18 @@ class camManager(object):
 		self.log("")
 		self.camera.color_effects = None
 
+	def clearAll(self):
+		print "Clear all"
+		self.log("")
+		self.camera.color_effects = None
+		self.camera.image_effect = None	
+		self.camera.awb_mode = None
+		self.camera.exposure_mode = None
+		# Clear existing overlays
+		existingOverlays = self.camera.overlays
+		for overlay in existingOverlays:
+			self.camera.remove_overlay(overlay)
+
 	def clearColor(self):
 		print "Clearing color"
 		self.log("")
@@ -203,6 +215,8 @@ class camManager(object):
 				self.colorize()
 			elif cmd == "clearcolor":
 				self.clearColor();
+			elif cmd == "clearall":
+				self.clearAll();
 			elif cmd == "exposure":
 				self.exposure()
 			elif cmd == "effect":

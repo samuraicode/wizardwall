@@ -98,6 +98,12 @@
 					<button type="button" onclick="stoprandom()" class="btn btn-default">Stop Randomize</button>
 				</div>
 			</div>
+			<hr/>
+			<div class="btn-group btn-group-lg btn-group-justified">
+				<div class="btn-group">
+					<button type="button" onclick="getIt('clearall')" class="btn btn-default">Clear All</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -190,7 +196,16 @@
 			var tvIndex = getRandomInt(0,tvs.length);
 			var nextTv = tvs[tvIndex];
 
-			getTv(nextTv, 'seteffect', effects[getRandomInt(0,effects.length)]);;
+			switch(getRandomInt(0,2)) {
+				case(0):
+					getTv(nextTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
+					break;
+				case(1):
+					getTv(nextTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
+					break;
+				default:
+					break;
+			}
 
 			if (randomOn) {
 				nextrandom();

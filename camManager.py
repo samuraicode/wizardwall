@@ -127,8 +127,8 @@ class camManager(object):
 		self.log("")
 		self.camera.color_effects = None
 		self.camera.image_effect = 'none'	
-		self.camera.awb_mode = 'none'
-		self.camera.exposure_mode = 'none'
+		self.camera.awb_mode = 'auto'
+		self.camera.exposure_mode = 'auto'
 		# Clear existing overlays
 		existingOverlays = self.camera.overlays
 		for overlay in existingOverlays:

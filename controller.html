@@ -188,35 +188,38 @@
 
 	function startrandom() {
 		randomOn = true;
-		nextrandom();
+		for (var i=0; i<tvs.length; i++) {
+			nextRandom(tvs[i]);
+		}
 		return false;
 	}
 
-	function nextrandom() {
+	function nextrandom(thisTv) {
 		setTimeout(function() {
-			// Pick a random tv
-			var tvIndex = getRandomInt(0,tvs.length);
-			var nextTv = tvs[tvIndex];
-
-			switch(getRandomInt(0,3)) {
+			switch(getRandomInt(0,5)) {
 				case(0):
-					getTv(nextTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
+					getTv(thisTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
 					break;
 				case(1):
-					getTv(nextTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
+					getTv(thisTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
 					break;
 				case(2):
-					getTv(nextTv, images[getRandomInt(0,images.length)]);
+					getTv(thisTv, images[getRandomInt(0,images.length)]);
+					break;
+				case(3):
+					getTv(thisTv, 'hflip');
+					break;
+				case(4):
+					getTv(thisTv, 'vflip');
 					break;
 				default:
 					break;
 			}
 
 			if (randomOn) {
-				nextrandom();
+				nextrandom(thisTv);
 			}
-		}, getRandomInt(100, 5000));
-		return false;
+		}, getRandomInt(1000, 10000));
 	}
 	</script>
 </body>

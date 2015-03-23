@@ -171,6 +171,8 @@
 	// RANDOMIZATION SECTION
 	var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
 
+	var images = ['v1', 'v2', 'v3', 'clear'];
+
 	// Returns a random integer between min (included) and max (excluded)
 	// Using Math.round() will give you a non-uniform distribution!
 	function getRandomInt(min, max) {
@@ -196,12 +198,15 @@
 			var tvIndex = getRandomInt(0,tvs.length);
 			var nextTv = tvs[tvIndex];
 
-			switch(getRandomInt(0,2)) {
+			switch(getRandomInt(0,3)) {
 				case(0):
 					getTv(nextTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
 					break;
 				case(1):
 					getTv(nextTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
+					break;
+				case(2):
+					getTv(nextTv, images[getRandomInt(0,images.length)]);
 					break;
 				default:
 					break;

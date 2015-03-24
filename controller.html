@@ -194,7 +194,7 @@
 		return false;
 	}
 
-	function nextrandom(thisTv) {
+	function nextRandom(thisTv) {
 		setTimeout(function() {
 			switch(getRandomInt(0,5)) {
 				case(0):
@@ -217,7 +217,7 @@
 			}
 
 			if (randomOn) {
-				nextrandom(thisTv);
+				nextRandom(thisTv);
 			}
 		}, getRandomInt(1000, 10000));
 	}

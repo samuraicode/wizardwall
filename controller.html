@@ -10,228 +10,210 @@
 	<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css">
 </head>
 <body>
-	<div class="container">
-		<div class="col-sm-12">
-			<h1 class="text-center">Master Controller</h1>
-			<a href="zoomcontroller.html">Zoom</a>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('scan')" class="btn btn-default">Scan</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('color')" class="btn btn-default">Colorize</button>
-				</div>
-				
-				<div class="btn-group">
-					<button type="button" onclick="getIt('effect')" class="btn btn-default">Effect</button>
-				</div>
+<div class="container">
+	<div class="col-sm-12">
+		<h1 class="text-center">Master Controller</h1>
+		<a href="zoomcontroller.html">Zoom</a>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('scan')" class="btn btn-default">Scan</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('exposure')" class="btn btn-default">Exposure</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('awbmode')" class="btn btn-default">AWB Mode</button>
-				</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('color')" class="btn btn-default">Colorize</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('hflip')" class="btn btn-default">Flip Horizontal</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('vflip')" class="btn btn-default">Flip Vertical</button>
-				</div>
+			
+			<div class="btn-group">
+				<button type="button" onclick="getIt('effect')" class="btn btn-default">Effect</button>
 			</div>
-			<hr/>
-			<code>vlc tcp/h264://my_pi_address:8000/</code>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('stream')" class="btn btn-default">Start Stream</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('stopstream')" class="btn btn-default">Stop Stream</button>
-				</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('exposure')" class="btn btn-default">Exposure</button>
 			</div>
-			<hr/>
-			<div class="input-group col-sm-4 picker">
-				<span class="input-group-addon"><i></i></span>
-				<input type="text" value="#ff0000" class="form-control" />
+			<div class="btn-group">
+				<button type="button" onclick="getIt('awbmode')" class="btn btn-default">AWB Mode</button>
 			</div>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="rainbowize()" class="btn btn-default">Rainbow</button>
-				</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('hflip')" class="btn btn-default">Flip Horizontal</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('v1')" class="btn btn-default">Image 1</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('v2')" class="btn btn-default">Image 2</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('v3')" class="btn btn-default">Image 3</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('clear')" class="btn btn-default">Clear</button>
-				</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('vflip')" class="btn btn-default">Flip Vertical</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('silence')" class="btn btn-default">Stop Logging</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="getIt('talk')" class="btn btn-default">Start Logging</button>
-				</div>
+		</div>
+		<hr/>
+		<code>vlc tcp/h264://my_pi_address:8000/</code>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('stream')" class="btn btn-default">Start Stream</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="startrandom()" class="btn btn-default">Start Randomize</button>
-				</div>
-				<div class="btn-group">
-					<button type="button" onclick="stoprandom()" class="btn btn-default">Stop Randomize</button>
-				</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('stopstream')" class="btn btn-default">Stop Stream</button>
 			</div>
-			<hr/>
-			<div class="btn-group btn-group-lg btn-group-justified">
-				<div class="btn-group">
-					<button type="button" onclick="getIt('clearall')" class="btn btn-default">Clear All</button>
-				</div>
+		</div>
+		<hr/>
+		<div class="input-group col-sm-4 picker">
+			<span class="input-group-addon"><i></i></span>
+			<input type="text" value="#ff0000" class="form-control" />
+		</div>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="rainbowize()" class="btn btn-default">Rainbow</button>
+			</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('v1')" class="btn btn-default">Image 1</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('v2')" class="btn btn-default">Image 2</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('v3')" class="btn btn-default">Image 3</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('clear')" class="btn btn-default">Clear</button>
+			</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('silence')" class="btn btn-default">Stop Logging</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" onclick="getIt('talk')" class="btn btn-default">Start Logging</button>
+			</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="startrandom()" class="btn btn-default">Start Randomize</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" onclick="stoprandom()" class="btn btn-default">Stop Randomize</button>
+			</div>
+		</div>
+		<hr/>
+		<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group">
+				<button type="button" onclick="getIt('clearall')" class="btn btn-default">Clear All</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="assets/js/bootstrap-colorpicker.min.js"></script>
-	<script>
-	var tvs = ['tvone','tvtwo','tvthree','tvfour','tvfive'];
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+<script>
+var tvs = ['tvone','tvtwo','tvthree','tvfour','tvfive'];
 
-	function getTv(tv, cmd, value) {
-		$.get( "http://" + tv + ":8080/api?" + cmd + "=" + value, function( data ) {});
+function getTv(tv, cmd, value) {
+	$.get( "http://" + tv + ":8080/api?" + cmd + "=" + value, function( data ) {});
+}
+
+function getIt(cmd, value) {
+	if (!value) value = "foo";
+
+	for (var i=0; i<tvs.length; i++) {
+		getTv(tvs[i], cmd, value);
 	}
+	return false;
+}
 
-	function getIt(cmd, value) {
-		if (!value) value = "foo";
+$('.picker').colorpicker().on('hidePicker', function(ev){
+	var newColor = ev.color.toRGB();
+	getIt('colorize', JSON.stringify(newColor));
+});
 
-		for (var i=0; i<tvs.length; i++) {
-			getTv(tvs[i], cmd, value);
+function makeColorGradient(index) {
+	var red = Math.sin(.3*index ) * 127 + 128;
+	var grn = Math.sin(.3*index + 2) * 127 + 128;
+	var blu = Math.sin(.3*index + 4) * 127 + 128;
+	getIt('colorize', JSON.stringify({'a':1,'r':red,'g':grn,'b':blu}));
+}
+
+var rainIndex = 0;
+
+function rainbowize() {
+	var rainbowInterval = setInterval(function() {
+		makeColorGradient(rainIndex++);
+		if (rainIndex > 50) { 
+			rainIndex=0;
+			clearInterval(rainbowInterval);
+			getIt('clearcolor');
 		}
-		return false;
+	}, 100);
+	return false;
+}
+
+// RANDOMIZATION SECTION
+var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
+var images = ['v1', 'v2', 'v3', 'clear', 'clear', 'clear'];
+var randomOn = false;
+
+// Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function stoprandom() {
+	randomOn = false;
+	return false;
+}
+
+function startrandom() {
+	randomOn = true;
+	for (var i=0; i<tvs.length; i++) {
+		nextRandom(tvs[i]);
 	}
+	return false;
+}
 
-	$('.picker').colorpicker().on('hidePicker', function(ev){
-		var newColor = ev.color.toRGB();
-		getIt('colorize', JSON.stringify(newColor));
-	});
-
-	function makeColorGradient(index, frequency1, frequency2, frequency3,
-		phase1, phase2, phase3,
-		center, width, len)
-	{
-		if (frequency1 == undefined)   frequency1 = .3;
-		if (frequency2 == undefined)   frequency2 = .3;
-		if (frequency3 == undefined)   frequency3 = .3;
-		if (phase1 == undefined)   phase1 = 0;
-		if (phase2 == undefined)   phase2 = 2;
-		if (phase3 == undefined)   phase3 = 4;
-		if (center == undefined)   center = 128;
-		if (width == undefined)    width = 127;
-		if (len == undefined)      len = 50;
-
-		// for (var i = 0; i < len; ++i)
-		// {
-			var red = Math.sin(frequency1*index + phase1) * width + center;
-			var grn = Math.sin(frequency2*index + phase2) * width + center;
-			var blu = Math.sin(frequency3*index + phase3) * width + center;
-			getIt('colorize', JSON.stringify({'a':1,'r':red,'g':grn,'b':blu}));
-		// }
-	}
-
-	var rainIndex = 0;
-
-	function rainbowize() {
-		var rainbowInterval = setInterval(function() {
-			makeColorGradient(rainIndex++);
-			if (rainIndex > 50) { 
-				rainIndex=0;
-				clearInterval(rainbowInterval);
-				getIt('clearcolor');
-			}
-		}, 100);
-		return false;
-	}
-
-	// RANDOMIZATION SECTION
-	var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
-
-	var images = ['v1', 'v2', 'v3', 'clear', 'clear', 'clear'];
-
-	// Returns a random integer between min (included) and max (excluded)
-	// Using Math.round() will give you a non-uniform distribution!
-	function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min)) + min;
-	}
-
-	var randomOn = false;
-
-	function stoprandom() {
-		randomOn = false;
-		return false;
-	}
-
-	function startrandom() {
-		randomOn = true;
-		for (var i=0; i<tvs.length; i++) {
-			nextRandom(tvs[i]);
-		}
-		return false;
-	}
-
-	function nextRandom(thisTv) {
-		setTimeout(function() {
-			switch(getRandomInt(0,6)) {
-				case(0):
-					getTv(thisTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
-					break;
-				case(1):
-					getTv(thisTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
-					break;
-				case(2):
-					getTv(thisTv, images[getRandomInt(0,images.length)]);
-					break;
-				case(3):
+function nextRandom(thisTv) {
+	setTimeout(function() {
+		switch(getRandomInt(0,6)) {
+			case(0):
+				getTv(thisTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
+				break;
+			case(1):
+				getTv(thisTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
+				break;
+			case(2):
+				getTv(thisTv, images[getRandomInt(0,images.length)]);
+				break;
+			case(3):
+				getTv(thisTv, 'hflip');
+				// Flip it back after a bit
+				setTimeout(function(){
 					getTv(thisTv, 'hflip');
-					// Flip it back after a bit
-					setTimeout(function(){
-						getTv(thisTv, 'hflip');
-					}, getRandomInt(1000, 5000));
-					break;
-				case(4):
+				}, getRandomInt(1000, 5000));
+				break;
+			case(4):
+				getTv(thisTv, 'vflip');
+				// Flip it back after a bit
+				setTimeout(function(){
 					getTv(thisTv, 'vflip');
-					// Flip it back after a bit
-					setTimeout(function(){
-						getTv(thisTv, 'vflip');
-					}, getRandomInt(1000, 5000));
-					break;
-				case(5):
-					getTv(thisTv, 'clearcolor');
-					break;
-				default:
-					break;
-			}
+				}, getRandomInt(1000, 5000));
+				break;
+			case(5):
+				getTv(thisTv, 'clearcolor');
+				break;
+			default:
+				break;
+		}
 
-			if (randomOn) {
-				nextRandom(thisTv);
-			}
-		}, getRandomInt(1000, 10000));
-	}
-	</script>
+		if (randomOn) {
+			nextRandom(thisTv);
+		}
+	}, getRandomInt(1000, 10000));
+}
+</script>
 </body>
 </html>

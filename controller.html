@@ -171,7 +171,7 @@
 	// RANDOMIZATION SECTION
 	var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
 
-	var images = ['v1', 'v2', 'v3', 'clear'];
+	var images = ['v1', 'v2', 'v3', 'clear', 'clear', 'clear'];
 
 	// Returns a random integer between min (included) and max (excluded)
 	// Using Math.round() will give you a non-uniform distribution!
@@ -196,7 +196,7 @@
 
 	function nextRandom(thisTv) {
 		setTimeout(function() {
-			switch(getRandomInt(0,5)) {
+			switch(getRandomInt(0,6)) {
 				case(0):
 					getTv(thisTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
 					break;
@@ -208,9 +208,20 @@
 					break;
 				case(3):
 					getTv(thisTv, 'hflip');
+					// Flip it back after a bit
+					setTimeout(function(){
+						getTv(thisTv, 'hflip');
+					}, getRandomInt(1000, 5000));
 					break;
 				case(4):
 					getTv(thisTv, 'vflip');
+					// Flip it back after a bit
+					setTimeout(function(){
+						getTv(thisTv, 'vflip');
+					}, getRandomInt(1000, 5000));
+					break;
+				case(5):
+					getTv(thisTv, 'clearcolor');
 					break;
 				default:
 					break;

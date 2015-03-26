@@ -178,7 +178,7 @@ function startrandom() {
 
 function nextRandom(thisTv) {
 	setTimeout(function() {
-		switch(getRandomInt(0,6)) {
+		switch(getRandomInt(0,4)) {
 			case(0):
 				getTv(thisTv, 'seteffect', effects[getRandomInt(0,effects.length)]);
 				break;
@@ -189,21 +189,21 @@ function nextRandom(thisTv) {
 				getTv(thisTv, images[getRandomInt(0,images.length)]);
 				break;
 			case(3):
+				getTv(thisTv, 'clearcolor');
+				break;
+			case(4):
 				getTv(thisTv, 'hflip');
 				// Flip it back after a bit
 				setTimeout(function(){
 					getTv(thisTv, 'hflip');
 				}, getRandomInt(1000, 5000));
 				break;
-			case(4):
+			case(5):
 				getTv(thisTv, 'vflip');
 				// Flip it back after a bit
 				setTimeout(function(){
 					getTv(thisTv, 'vflip');
 				}, getRandomInt(1000, 5000));
-				break;
-			case(5):
-				getTv(thisTv, 'clearcolor');
 				break;
 			default:
 				break;

@@ -37,7 +37,7 @@ class camManager(object):
 
 	# Initialization commands
 	def readInit(self):
-		f = open('config.txt', 'w')
+		f = open('config.txt', 'r')
 		for line in f:
 			self.handleCommand(self, line)
 

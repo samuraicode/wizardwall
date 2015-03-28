@@ -32,6 +32,7 @@ class camManager(object):
 		self.camera = picamera.PiCamera()
 		self.camera.resolution = (720,480)
 		self.camera.framerate = 24
+		self.readInit()
 		self.start()
 
 	# Initialization commands

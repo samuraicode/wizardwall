@@ -34,6 +34,12 @@ class camManager(object):
 		self.camera.framerate = 24
 		self.start()
 
+	# Initialization commands
+	def readInit(self):
+		f = open('config.txt' 'w')
+		for line in f:
+			self.handleCommand(self, line)
+
 	# Utility functions
 	def log(self, message):
 		if self.quiet == False:

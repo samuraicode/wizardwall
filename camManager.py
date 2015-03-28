@@ -39,6 +39,7 @@ class camManager(object):
 	def readInit(self):
 		f = open('config.txt', 'r')
 		for line in f:
+			self.log(line)
 			self.handleCommand(self, line)
 
 	# Utility functions

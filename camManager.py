@@ -40,7 +40,7 @@ class camManager(object):
 		f = open('config.txt', 'r')
 		for line in f:
 			self.log(line)
-			self.handleCommand(self, line)
+			self.handleCommand(line)
 
 	# Utility functions
 	def log(self, message):

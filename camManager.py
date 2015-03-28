@@ -39,8 +39,9 @@ class camManager(object):
 	def readInit(self):
 		f = open('config.txt', 'r')
 		for line in f:
-			self.log(line)
-			self.handleCommand(line)
+			configCmd = ast.literal_eval(line)
+			self.log(configCmd)
+			self.handleCommand(configCmd)
 
 	# Utility functions
 	def log(self, message):

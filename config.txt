@@ -1,2 +1,2 @@
-{'hflip': ['foo']}
-{'vflip': ['foo']}
+'hflip': ['foo']
+'vflip': ['foo']

@@ -32,7 +32,15 @@ class camManager(object):
 		self.camera = picamera.PiCamera()
 		self.camera.resolution = (720,480)
 		self.camera.framerate = 24
+		self.readInit()
 		self.start()
+
+	# Initialization commands
+	def readInit(self):
+		with open('config.txt', 'r') as f:
+			for line in f:
+				configCmd = ast.literal_eval(line)
+				self.handleCommand(configCmd)
 
 	# Utility functions
 	def log(self, message):

@@ -89,7 +89,7 @@ class camManager(object):
 	def setOverlay(self, overlayIndex):
 		self.clearOverlay()
 
-		if overlayIndex > 0 && overlayIndex < len(self.camera.overlays):
+		if (overlayIndex > 0) & (overlayIndex < len(self.camera.overlays)):
 			self.camera.overlays[overlayIndex].alpha = 64
 
 	def clearOverlay(self):

@@ -186,6 +186,7 @@ function nextRandom(thisTv) {
 				getTv(thisTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
 				break;
 			case(2):
+				// TODO: Fix memory issue with overlays before re-enabling
 				getTv(thisTv, images[getRandomInt(0,images.length)]);
 				break;
 			case(3):

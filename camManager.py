@@ -27,6 +27,8 @@ class camManager(object):
 	server_socket = None
 	connection = None
 	quiet = False
+	overlayImages = ['images/v1.png','images/v2.png','images/v3.png']
+	overlays = []
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -71,9 +73,21 @@ class camManager(object):
 		self.log(effect)
 		self.camera.image_effect = effect
 
+	# def loadOverlays(self):
+	# 	for overlayImage in overlayImages:
+	# 		# Load the arbitrarily sized image
+	# 		img = Image.open(overlayImage)
+	# 		pad = Image.new('RGB', (
+	# 			((img.size[0] + 31) // 32) * 32,
+	# 			((img.size[1] + 15) // 16) * 16,
+	# 		))
+	# 		pad.paste(img, (0, 0))
+	# 		overlays.add(img)		
+
 	def setOverlay(self, imagefile):
 		self.clearOverlay()
 
+		# TODO: Store overlays and reuse rather than creating new ones which can cause memory problems
 		# Load the arbitrarily sized image
 		img = Image.open(imagefile)
 		pad = Image.new('RGB', (
@@ -81,7 +95,7 @@ class camManager(object):
 			((img.size[1] + 15) // 16) * 16,
 		))
 		pad.paste(img, (0, 0))
-		o = self.camera.add_overlay(pad.tostring(), size=img.size)
+		o = self.camera.add_overlay(pad.tostring(), size=pad.size)
 		o.alpha = 64
 		o.layer = 3
 

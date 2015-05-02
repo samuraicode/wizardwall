@@ -87,20 +87,11 @@ class camManager(object):
 			self.overlays.append(o)
 		self.clearOverlay()	
 
-	def setOverlay(self, imagefile):
+	def setOverlay(self, overlayIndex):
 		self.clearOverlay()
 
 		# TODO: Store overlays and reuse rather than creating new ones which can cause memory problems
-		# Load the arbitrarily sized image
-		img = Image.open(imagefile)
-		pad = Image.new('RGB', (
-			((img.size[0] + 31) // 32) * 32,
-			((img.size[1] + 15) // 16) * 16,
-		))
-		pad.paste(img, (0, 0))
-		o = self.camera.add_overlay(pad.tostring(), size=pad.size)
-		o.alpha = 64
-		o.layer = 3
+		self.camera.add_overlay(self.overlays[overlayIndex])
 
 	def clearOverlay(self):
 		# Clear existing overlays
@@ -244,11 +235,11 @@ class camManager(object):
 			elif cmd == "clear":
 				self.clearOverlay()
 			elif cmd == "v1":
-				self.setOverlay('images/v1.png')
+				self.setOverlay(1)
 			elif cmd == "v2":
-				self.setOverlay('images/v2.png')
+				self.setOverlay(2)
 			elif cmd == "v3":
-				self.setOverlay('images/v3.png')
+				self.setOverlay(3)
 			elif cmd == "silence":
 				self.silence();
 			elif cmd == "talk":

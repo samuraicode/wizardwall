@@ -84,6 +84,7 @@ class camManager(object):
 			o = self.camera.add_overlay(pad.tostring(), size=pad.size)
 			self.camera.overlays[layerIndex].alpha = 0
 			self.camera.overlays[layerIndex].layer = layerIndex + 10
+			layerIndex = layerIndex + 1
 
 	def setOverlay(self, overlayIndex):
 		self.clearOverlay()

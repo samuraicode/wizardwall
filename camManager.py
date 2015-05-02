@@ -36,6 +36,7 @@ class camManager(object):
 		self.camera.framerate = 24
 		self.readInit()
 		self.start()
+		self.loadOverlays()
 
 	# Initialization commands
 	def readInit(self):
@@ -71,16 +72,20 @@ class camManager(object):
 		self.log(effect)
 		self.camera.image_effect = effect
 
-	# def loadOverlays(self):
-	# 	for overlayImage in overlayImages:
-	# 		# Load the arbitrarily sized image
-	# 		img = Image.open(overlayImage)
-	# 		pad = Image.new('RGB', (
-	# 			((img.size[0] + 31) // 32) * 32,
-	# 			((img.size[1] + 15) // 16) * 16,
-	# 		))
-	# 		pad.paste(img, (0, 0))
-	# 		overlays.add(img)		
+	def loadOverlays(self):
+		for overlayImage in overlayImages:
+			# Load the arbitrarily sized image
+			img = Image.open(overlayImage)
+			pad = Image.new('RGB', (
+				((img.size[0] + 31) // 32) * 32,
+				((img.size[1] + 15) // 16) * 16,
+			))
+			pad.paste(img, (0, 0))
+			o = self.camera.add_overlay(pad.tostring(), size=pad.size)
+			o.alpha = 64
+			o.layer = 3
+			overlays.add(o)
+		self.clearOverlay()	
 
 	def setOverlay(self, imagefile):
 		self.clearOverlay()

@@ -50,12 +50,12 @@ class camManager(object):
 			self.camera.annotate_text = str(message)
 
 	def silence(self):
-		self.log("");
+		self.log("")
 		self.quiet = True
 
 	def talk(self):
 		self.quiet = False
-		self.log("logging");
+		self.log("logging")
 
 	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b
@@ -88,7 +88,9 @@ class camManager(object):
 
 	def setOverlay(self, overlayIndex):
 		self.clearOverlay()
-		self.camera.overlays[overlayIndex].alpha = 64
+
+		if overlayIndex < len(self.camera.overlays):
+			self.camera.overlays[overlayIndex].alpha = 64
 
 	def clearOverlay(self):
 		# Clear existing overlays
@@ -202,7 +204,7 @@ class camManager(object):
 			elif cmd == "stream":
 				self.streamit()
 			elif cmd == "stopstream":
-				self.stopstream();
+				self.stopstream()
 			elif cmd == "zoom":
 				zoomDict = ast.literal_eval(command[cmd][0])
 				self.log(zoomDict)
@@ -214,33 +216,29 @@ class camManager(object):
 			elif cmd == "color":
 				self.colorize()
 			elif cmd == "clearcolor":
-				self.clearColor();
+				self.clearColor()
 			elif cmd == "clearall":
-				self.clearAll();
+				self.clearAll()
 			elif cmd == "exposure":
 				self.exposure()
 			elif cmd == "effect":
 				self.effectize()
 			elif cmd == "seteffect":
-				self.seteffect(command[cmd][0]);
+				self.seteffect(command[cmd][0])
 			elif cmd == "awbmode":
-				self.awbmode();
+				self.awbmode()
 			elif cmd == "hflip":
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":
 				self.camera.vflip = not self.camera.vflip
 			elif cmd == "clear":
 				self.clearOverlay()
-			elif cmd == "v1":
-				self.setOverlay(1)
-			elif cmd == "v2":
-				self.setOverlay(2)
-			elif cmd == "v3":
-				self.setOverlay(3)
+			elif cmd == "overlay":
+				self.setOverlay(command[cmd][0])
 			elif cmd == "silence":
-				self.silence();
+				self.silence()
 			elif cmd == "talk":
-				self.talk();
+				self.talk()
 			else:
 				print "Unknown command: %s" % cmd
 	

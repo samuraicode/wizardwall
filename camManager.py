@@ -84,7 +84,7 @@ class camManager(object):
 			o = self.camera.add_overlay(pad.tostring(), size=pad.size)
 			o.alpha = 64
 			o.layer = 3
-			self.overlays.add(o)
+			self.overlays.append(o)
 		self.clearOverlay()	
 
 	def setOverlay(self, imagefile):

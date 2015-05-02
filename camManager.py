@@ -73,7 +73,7 @@ class camManager(object):
 		self.camera.image_effect = effect
 
 	def loadOverlays(self):
-		for overlayImage in overlayImages:
+		for overlayImage in self.overlayImages:
 			# Load the arbitrarily sized image
 			img = Image.open(overlayImage)
 			pad = Image.new('RGB', (
@@ -84,7 +84,7 @@ class camManager(object):
 			o = self.camera.add_overlay(pad.tostring(), size=pad.size)
 			o.alpha = 64
 			o.layer = 3
-			overlays.add(o)
+			self.overlays.add(o)
 		self.clearOverlay()	
 
 	def setOverlay(self, imagefile):

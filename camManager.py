@@ -89,7 +89,7 @@ class camManager(object):
 	def setOverlay(self, overlayIndex):
 		self.clearOverlay()
 
-		if overlayIndex < len(self.camera.overlays):
+		if overlayIndex > 0 && overlayIndex < len(self.camera.overlays):
 			self.camera.overlays[overlayIndex].alpha = 64
 
 	def clearOverlay(self):
@@ -234,7 +234,7 @@ class camManager(object):
 			elif cmd == "clear":
 				self.clearOverlay()
 			elif cmd == "overlay":
-				self.setOverlay(command[cmd][0])
+				self.setOverlay(ast.literal_eval(command[cmd][0]))
 			elif cmd == "silence":
 				self.silence()
 			elif cmd == "talk":

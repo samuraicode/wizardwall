@@ -65,11 +65,9 @@ class camManager(object):
 
 	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
-		print convertedColor
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
 
 	def seteffect(self, effect):
-		print "Setting effect to %s" % effect
 		self.log(effect)
 		self.camera.image_effect = effect
 
@@ -107,18 +105,15 @@ class camManager(object):
 
 	# Preview manipulation
 	def start(self):
-		print "Starting..."
 		self.isRunning = True
 		self.camera.start_preview()
 
 	def stop(self):
-		print "Stopping..."
 		self.isRunning = False
 		self.camera.stop_preview()
 
 	# Commands
 	def scan(self):
-		print "Scanning"
 		for i in range(len(self.quadrants)):
 			self.log("Quadrant " + str(i))
 			self.camera.zoom = self.quadrants[i]
@@ -131,7 +126,6 @@ class camManager(object):
 		self.camera.zoom = (0,0,1.0,1.0)
 
 	def colorize(self):
-		print "Coloring"
 		self.log("Red")
 		self.setColor(255, 0, 0)
 		time.sleep(2.0)
@@ -145,7 +139,6 @@ class camManager(object):
 		self.camera.color_effects = None
 
 	def clearAll(self):
-		print "Clear all"
 		self.log("")
 		self.camera.color_effects = None
 		self.camera.image_effect = 'none'	
@@ -157,12 +150,10 @@ class camManager(object):
 			self.camera.remove_overlay(overlay)
 
 	def clearColor(self):
-		print "Clearing color"
 		self.log("")
 		self.camera.color_effects = None
 
 	def effectize(self):
-		print "Setting effect"
 		currentEffect = self.camera.image_effect
 		nextIndex = self.effects.index(currentEffect) + 1
 		if nextIndex >= len(self.effects):
@@ -172,7 +163,6 @@ class camManager(object):
 		self.camera.image_effect = nextEffect
 
 	def exposure(self):
-		print "Setting exposure"
 		currentExposure = self.camera.exposure_mode
 		nextIndex = self.exposures.index(currentExposure) + 1
 		if nextIndex >= len(self.exposures):
@@ -182,7 +172,6 @@ class camManager(object):
 		self.camera.exposure_mode = nextExposure
 
 	def awbmode(self):
-		print "Setting awb mode"
 		currentMode = self.camera.awb_mode
 		nextIndex = self.awbmodes.index(currentMode) + 1
 		if nextIndex >= len(self.awbmodes):
@@ -193,7 +182,6 @@ class camManager(object):
 
 	def streamit(self):
 		serverPort = 8000
-		print "Starting stream on port %s" % serverPort
 		self.server_socket = socket.socket()
 		self.server_socket.bind(('0.0.0.0', 8000))
 		self.server_socket.listen(0)
@@ -208,15 +196,12 @@ class camManager(object):
 			self.server_socket.close()
 
 	def stopstream(self):
-		print "Stopping stream"
 		self.camera.stop_recording()
 		self.connection.close()
 		self.server_socket.close()
 
 	# Handler
 	def handleCommand(self, command):
-		print "Handling command"
-		print command
 		for cmd in command:
 			self.log(cmd)
 			if cmd == "scan":
@@ -265,3 +250,4 @@ class camManager(object):
 				self.talk();
 			else:
 				print "Unknown command: %s" % cmd
+	

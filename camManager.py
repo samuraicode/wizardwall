@@ -27,6 +27,7 @@ class camManager(object):
 	server_socket = None
 	connection = None
 	quiet = False
+	overlayImages = ['images/v1.png','images/v2.png','images/v3.png']
 
 	def __init__(self):
 		self.camera = picamera.PiCamera()
@@ -34,6 +35,7 @@ class camManager(object):
 		self.camera.framerate = 24
 		self.readInit()
 		self.start()
+		self.loadOverlays()
 
 	# Initialization commands
 	def readInit(self):
@@ -48,12 +50,12 @@ class camManager(object):
 			self.camera.annotate_text = str(message)
 
 	def silence(self):
-		self.log("");
+		self.log("")
 		self.quiet = True
 
 	def talk(self):
 		self.quiet = False
-		self.log("logging");
+		self.log("logging")
 
 	def _ycc(self, r, g, b): # in (0,255) range cb = u, cr = v
 		y = .299*r + .587*g + .114*b
@@ -63,48 +65,50 @@ class camManager(object):
 
 	def setColor(self, r, g, b): # (r,g,b)
 		convertedColor = self._ycc(r, g, b)
-		print convertedColor
 		self.camera.color_effects = (convertedColor[1], convertedColor[2])
 
 	def seteffect(self, effect):
-		print "Setting effect to %s" % effect
 		self.log(effect)
 		self.camera.image_effect = effect
 
-	def setOverlay(self, imagefile):
+	def loadOverlays(self):
+		layerIndex = 0
+		for overlayImage in self.overlayImages:
+			# Load the arbitrarily sized image
+			img = Image.open(overlayImage)
+			pad = Image.new('RGB', (
+				((img.size[0] + 31) // 32) * 32,
+				((img.size[1] + 15) // 16) * 16,
+			))
+			pad.paste(img, (0, 0))
+			o = self.camera.add_overlay(pad.tostring(), size=pad.size)
+			self.camera.overlays[layerIndex].alpha = 0
+			self.camera.overlays[layerIndex].layer = layerIndex + 10
+			layerIndex = layerIndex + 1
+
+	def setOverlay(self, overlayIndex):
 		self.clearOverlay()
 
-		# Load the arbitrarily sized image
-		img = Image.open(imagefile)
-		pad = Image.new('RGB', (
-			((img.size[0] + 31) // 32) * 32,
-			((img.size[1] + 15) // 16) * 16,
-		))
-		pad.paste(img, (0, 0))
-		o = self.camera.add_overlay(pad.tostring(), size=img.size)
-		o.alpha = 64
-		o.layer = 3
+		if (overlayIndex >= 0) & (overlayIndex < len(self.camera.overlays)):
+			self.camera.overlays[overlayIndex].alpha = 64
 
 	def clearOverlay(self):
 		# Clear existing overlays
 		existingOverlays = self.camera.overlays
 		for overlay in existingOverlays:
-			self.camera.remove_overlay(overlay)
+			overlay.alpha = 0
 
 	# Preview manipulation
 	def start(self):
-		print "Starting..."
 		self.isRunning = True
 		self.camera.start_preview()
 
 	def stop(self):
-		print "Stopping..."
 		self.isRunning = False
 		self.camera.stop_preview()
 
 	# Commands
 	def scan(self):
-		print "Scanning"
 		for i in range(len(self.quadrants)):
 			self.log("Quadrant " + str(i))
 			self.camera.zoom = self.quadrants[i]
@@ -117,7 +121,6 @@ class camManager(object):
 		self.camera.zoom = (0,0,1.0,1.0)
 
 	def colorize(self):
-		print "Coloring"
 		self.log("Red")
 		self.setColor(255, 0, 0)
 		time.sleep(2.0)
@@ -131,7 +134,6 @@ class camManager(object):
 		self.camera.color_effects = None
 
 	def clearAll(self):
-		print "Clear all"
 		self.log("")
 		self.camera.color_effects = None
 		self.camera.image_effect = 'none'	
@@ -143,12 +145,10 @@ class camManager(object):
 			self.camera.remove_overlay(overlay)
 
 	def clearColor(self):
-		print "Clearing color"
 		self.log("")
 		self.camera.color_effects = None
 
 	def effectize(self):
-		print "Setting effect"
 		currentEffect = self.camera.image_effect
 		nextIndex = self.effects.index(currentEffect) + 1
 		if nextIndex >= len(self.effects):
@@ -158,7 +158,6 @@ class camManager(object):
 		self.camera.image_effect = nextEffect
 
 	def exposure(self):
-		print "Setting exposure"
 		currentExposure = self.camera.exposure_mode
 		nextIndex = self.exposures.index(currentExposure) + 1
 		if nextIndex >= len(self.exposures):
@@ -168,7 +167,6 @@ class camManager(object):
 		self.camera.exposure_mode = nextExposure
 
 	def awbmode(self):
-		print "Setting awb mode"
 		currentMode = self.camera.awb_mode
 		nextIndex = self.awbmodes.index(currentMode) + 1
 		if nextIndex >= len(self.awbmodes):
@@ -179,7 +177,6 @@ class camManager(object):
 
 	def streamit(self):
 		serverPort = 8000
-		print "Starting stream on port %s" % serverPort
 		self.server_socket = socket.socket()
 		self.server_socket.bind(('0.0.0.0', 8000))
 		self.server_socket.listen(0)
@@ -194,15 +191,12 @@ class camManager(object):
 			self.server_socket.close()
 
 	def stopstream(self):
-		print "Stopping stream"
 		self.camera.stop_recording()
 		self.connection.close()
 		self.server_socket.close()
 
 	# Handler
 	def handleCommand(self, command):
-		print "Handling command"
-		print command
 		for cmd in command:
 			self.log(cmd)
 			if cmd == "scan":
@@ -210,7 +204,7 @@ class camManager(object):
 			elif cmd == "stream":
 				self.streamit()
 			elif cmd == "stopstream":
-				self.stopstream();
+				self.stopstream()
 			elif cmd == "zoom":
 				zoomDict = ast.literal_eval(command[cmd][0])
 				self.log(zoomDict)
@@ -222,32 +216,29 @@ class camManager(object):
 			elif cmd == "color":
 				self.colorize()
 			elif cmd == "clearcolor":
-				self.clearColor();
+				self.clearColor()
 			elif cmd == "clearall":
-				self.clearAll();
+				self.clearAll()
 			elif cmd == "exposure":
 				self.exposure()
 			elif cmd == "effect":
 				self.effectize()
 			elif cmd == "seteffect":
-				self.seteffect(command[cmd][0]);
+				self.seteffect(command[cmd][0])
 			elif cmd == "awbmode":
-				self.awbmode();
+				self.awbmode()
 			elif cmd == "hflip":
 				self.camera.hflip = not self.camera.hflip
 			elif cmd == "vflip":
 				self.camera.vflip = not self.camera.vflip
 			elif cmd == "clear":
 				self.clearOverlay()
-			elif cmd == "v1":
-				self.setOverlay('images/v1.png')
-			elif cmd == "v2":
-				self.setOverlay('images/v2.png')
-			elif cmd == "v3":
-				self.setOverlay('images/v3.png')
+			elif cmd == "overlay":
+				self.setOverlay(ast.literal_eval(command[cmd][0]))
 			elif cmd == "silence":
-				self.silence();
+				self.silence()
 			elif cmd == "talk":
-				self.talk();
+				self.talk()
 			else:
 				print "Unknown command: %s" % cmd
+	

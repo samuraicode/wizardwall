@@ -68,13 +68,13 @@
 		<hr/>
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<div class="btn-group">
-				<button type="button" onclick="getIt('v1')" class="btn btn-default">Image 1</button>
+				<button type="button" onclick="getIt('overlay','0')" class="btn btn-default">Image 1</button>
 			</div>
 			<div class="btn-group">
-				<button type="button" onclick="getIt('v2')" class="btn btn-default">Image 2</button>
+				<button type="button" onclick="getIt('overlay','1')" class="btn btn-default">Image 2</button>
 			</div>
 			<div class="btn-group">
-				<button type="button" onclick="getIt('v3')" class="btn btn-default">Image 3</button>
+				<button type="button" onclick="getIt('overlay','2')" class="btn btn-default">Image 3</button>
 			</div>
 			<div class="btn-group">
 				<button type="button" onclick="getIt('clear')" class="btn btn-default">Clear</button>
@@ -114,7 +114,8 @@
 var tvs = ['tvone','tvtwo','tvthree','tvfour','tvfive'];
 
 function getTv(tv, cmd, value) {
-	$.get( "http://" + tv + ":8080/api?" + cmd + "=" + value, function( data ) {});
+	var targetVal = value ? value : '0';
+	$.get( "http://" + tv + ":8080/api?" + cmd + "=" + targetVal, function( data ) {});
 }
 
 function getIt(cmd, value) {
@@ -154,8 +155,8 @@ function rainbowize() {
 
 // RANDOMIZATION SECTION
 var effects = ['none', 'negative', 'solarize', 'sketch', 'emboss', 'oilpaint', 'gpen', 'pastel', 'watercolor', 'colorswap', 'washedout', 'cartoon'];
-var images = ['v1', 'v2', 'v3', 'clear', 'clear', 'clear'];
 var randomOn = false;
+var imageCount = 6;
 
 // Returns a random integer between min (included) and max (excluded)
 // Using Math.round() will give you a non-uniform distribution!
@@ -186,7 +187,7 @@ function nextRandom(thisTv) {
 				getTv(thisTv, 'colorize', JSON.stringify({'a':1,'r':getRandomInt(1,255),'g':getRandomInt(1,255),'b':getRandomInt(1,255)}));
 				break;
 			case(2):
-				getTv(thisTv, images[getRandomInt(0,images.length)]);
+				getTv(thisTv, 'overlay', getRandomInt(0,imageCount));
 				break;
 			case(3):
 				getTv(thisTv, 'clearcolor');

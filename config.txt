@@ -1,2 +1,3 @@
 {'hflip': ['foo']}
 {'vflip': ['foo']}
+{'silence': ['foo']}
